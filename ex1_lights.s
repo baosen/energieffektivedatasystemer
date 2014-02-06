@@ -32,7 +32,7 @@
      
                   /* External Interrupts */
                   .long   dummy_handler
-                  .long   gpio_handler_even           /* GPIO even handler */
+                  .long   gpio_handler           /* GPIO even handler */
                   .long   dummy_handler
                   .long   dummy_handler
                   .long   dummy_handler
@@ -42,7 +42,7 @@
                   .long   dummy_handler
                   .long   dummy_handler
                   .long   dummy_handler
-                  .long   gpio_handler_odd            /* GPIO odd handler */
+                  .long   gpio_handler            /* GPIO odd handler */
                   .long   dummy_handler
                   .long   dummy_handler
                   .long   dummy_handler
@@ -102,54 +102,14 @@
                     str r2, [r1, #GPIO_MODEH]
      
 		    // Output current to some LEDs.
-                    //disco
+		    mov r2, #0x0000aa00
+                    str r2, [r1, #GPIO_DOUT]
 
-		    mov r5, #0x7f7f7f7f
-		    str r5, [r1, #GPIO_DOUT]
 
-		
-     
-		    // Enable.
-                    ldr r1, gpio_pc_base_address           
-                    mov r2, #0x33333333
-                    str r2, [r1, GPIO_MODEL]
-     
-                    mov r2, #0xff
-                    str r2, [r1, GPIO_DOUT]
+                    b .        
                    
-                    ldr r1, gpio_extipsell
-                    mov r2, #0x22222222
-                    str r2, [r1]
-                   
-                    ldr r1, gpio_extirise
-                    mov r2, #0xff
-                    str r2, [r1]
 
-                    ldr r1, gpio_ien
-                    mov r2, #0xff
-                    str r2, [r1]
-                   
-                    ldr r1, scr // Throws an interrupt.
-                    mov r2, #6
-                    str r2, [r1]
-                   
-                    ldr r1, =GPIO_BASE
-                    mov r2, #0xff
-                    str r2, [r1, #GPIO_IFC]
-                    ldr r1, isero
      
-                    ldr r2, =0x802
-                   
-                    str r2, [r1]
-                   
-    loop:
-                    ldr r1, scr // The value in scr has to be set everytime an interrupt happens, because it gets reset when an interrupts is thrown.
-                    mov r2, #6
-                    str r2, [r1]
-                   
-                    wfi
-                    b loop
-                                   
     scr:
                     .long SCR
     isero:
@@ -181,30 +141,9 @@
             /////////////////////////////////////////////////////////////////////////////
            
             .thumb_func
-    gpio_handler_even:  
-
-		    ldr r1, gpio_pa_base_address
-		    ror r5, r5, #7
-		    str r5, [r1, #GPIO_DOUT]		    
-		    
-		    // Clear interrupt flag.
-                    ldr r1, gpio_if
-                    ldr r2, [r1]
-                    str r2, [r1, 8]
-                    bx lr
-     
-                // do nothing
-	.thumb_func
-    gpio_handler_odd:
+    gpio_handler:  
 		
-		ldr r1, gpio_pa_base_address
-		ror r5, r5, #1
-		str r5, [r1, #GPIO_DOUT]
-		
-		ldr r1, gpio_if
-		ldr r2, [r1]
-		str r2, [r1,8]
-		bx lr
+                b . // do nothing
            
             /////////////////////////////////////////////////////////////////////////////
            

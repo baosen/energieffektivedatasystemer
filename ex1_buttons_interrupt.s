@@ -32,7 +32,7 @@
      
                   /* External Interrupts */
                   .long   dummy_handler
-                  .long   gpio_handler_even           /* GPIO even handler */
+                  .long   gpio_handler          /* GPIO even handler */
                   .long   dummy_handler
                   .long   dummy_handler
                   .long   dummy_handler
@@ -42,7 +42,7 @@
                   .long   dummy_handler
                   .long   dummy_handler
                   .long   dummy_handler
-                  .long   gpio_handler_odd            /* GPIO odd handler */
+                  .long   gpio_handler            /* GPIO odd handler */
                   .long   dummy_handler
                   .long   dummy_handler
                   .long   dummy_handler
@@ -100,15 +100,7 @@
 	            // Enable GPIOs to give the program the ability to output current.
                     mov r2, #0x55555555
                     str r2, [r1, #GPIO_MODEH]
-     
-		    // Output current to some LEDs.
-                    //disco
 
-		    mov r5, #0x7f7f7f7f
-		    str r5, [r1, #GPIO_DOUT]
-
-		
-     
 		    // Enable.
                     ldr r1, gpio_pc_base_address           
                     mov r2, #0x33333333
@@ -121,6 +113,10 @@
                     mov r2, #0x22222222
                     str r2, [r1]
                    
+                    ldr r1, gpio_extifall
+                    mov r2, #0xff
+                    str r2, [r1]
+
                     ldr r1, gpio_extirise
                     mov r2, #0xff
                     str r2, [r1]
@@ -150,6 +146,8 @@
                     wfi
                     b loop
                                    
+
+     
     scr:
                     .long SCR
     isero:
@@ -181,31 +179,21 @@
             /////////////////////////////////////////////////////////////////////////////
            
             .thumb_func
-    gpio_handler_even:  
-
-		    ldr r1, gpio_pa_base_address
-		    ror r5, r5, #7
-		    str r5, [r1, #GPIO_DOUT]		    
-		    
+    gpio_handler:  
+		    // Copy the button state bits to the "GPIO output to LED"-bits.
+                    ldr r1, gpio_pc_base_address
+                    ldr r2, [r1, #GPIO_DIN]
+                    lsl r2, r2, #8
+                    ldr r1, gpio_pa_base_address
+                    str r2, [r1, #GPIO_DOUT]
 		    // Clear interrupt flag.
-                    ldr r1, gpio_if
+		    ldr r1, gpio_if
                     ldr r2, [r1]
                     str r2, [r1, 8]
                     bx lr
-     
-                // do nothing
-	.thumb_func
-    gpio_handler_odd:
-		
-		ldr r1, gpio_pa_base_address
-		ror r5, r5, #1
-		str r5, [r1, #GPIO_DOUT]
-		
-		ldr r1, gpio_if
-		ldr r2, [r1]
-		str r2, [r1,8]
-		bx lr
-           
+
+
+  
             /////////////////////////////////////////////////////////////////////////////
            
             .thumb_func
