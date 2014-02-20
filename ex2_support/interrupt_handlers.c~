@@ -13,8 +13,8 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
     remember to clear the pending interrupt by writing 1 to TIMER1_IFC
   */  
 	*TIMER1_IFC =1;
-	asd += 10;
-	if(asd > 3830){
+	asd += 3;
+	if(asd > 300){
 		asd = 0;
 	}
 	

@@ -12,7 +12,8 @@
   registers are 16 bits.
 */
 /* The period between sound samples, in clock cycles */
-#define   SAMPLE_PERIOD   0
+#define   SAMPLE_PERIOD   0x008C
+
 
 /* Declaration of peripheral setup functions */
 void setupTimer(uint32_t period);
@@ -30,26 +31,21 @@ int main(void)
   setupTimer(SAMPLE_PERIOD);
   
   /* Enable interrupt handling */
-  //setupNVIC();
+  setupNVIC();
   
   /* TODO for higher energy efficiency, sleep while waiting for interrupts
      instead of infinite loop for busy-waiting
   */
-  
-  while(1) {
-	//*GPIO_PA_DOUT = *GPIO_PC_DIN << 8;
-	/*for (int i = 0; i < 2048; i+=2) {
+ 	return 0; 
+ 
+}
+void sound(){
+for (int i = 0; i < 4096; i++) {
              *DAC0_CH0DATA = i;
         }
-        for (int i = 0; i < 2048; i+=2) {
-	     *DAC0_CH0DATA = 2048 - i;
-        }*/
-for (int i = 0; i < 2048; i++) {
+for (int i = 2048; i > 0; i = i-2) {
              *DAC0_CH0DATA = i;
         }
-  }
-
-  return 0;
 }
 
 void setupNVIC()
@@ -61,6 +57,8 @@ void setupNVIC()
      You will need TIMER1, GPIO odd and GPIO even interrupt handling for this
      assignment.
   */
+	*ISER0 = 0x1802;
+	
 }
 
 /* if other interrupt handlers are needed, use the following names: 
