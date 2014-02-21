@@ -1,14 +1,15 @@
 #include "efm32gg.h" // given code.
 
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// The .c files is included directly to help the compiler do hardcore super uber optimisation tricks (inlining, function unrolling etc...).
 #include "gpio.c"
 #include "nvic.c"
 #include "timer.c"
 #include "dac.c"
 #include "interrupt_handlers.c"
-
-#include <stdint.h>
-#include <stdbool.h>
-#include <stdlib.h>
 
 /* 
     TODO: calculate the appropriate sample period for the sound wave(s) 
@@ -17,27 +18,30 @@
     registers are 16 bits.
 */
 
-/* The period between sound samples, in clock cycles */
-static const int SAMPLE_PERIOD = 0x008C;
+/* The waiting period between each interrupt in clock cycles */
+static const int SAMPLE_PERIOD = 5000;
 
 void setupPeripheral(void)
 {
     /* Call the peripheral setup functions */
     setupGPIO();
     setupDAC();
-    setupTimer(SAMPLE_PERIOD); /* Enable interrupt handling */
-    setupNVIC();
+    setupTimer(SAMPLE_PERIOD); 
+    setupNVIC(); /* Enable interrupt handling */
 }
 
 /* Your code will start executing here */
 int main(void) 
 { 
     setupPeripheral();
-	
+
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
-        instead of infinite loop for busy-waiting
-    */
- 	return EXIT_SUCCESS; 
+        instead of infinite loop for busy-waiting. */
+    //for (;;) {
+    //    *SCR = 6;
+    //    __asm__("wfi");
+    //}
+    return EXIT_SUCCESS;
 }
 
 /* if other interrupt handlers are needed, use the following names: 

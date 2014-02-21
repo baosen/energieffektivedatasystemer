@@ -1,6 +1,5 @@
-# Example Makefile
-#
 # Exercise 2, TDT4258
+# Authors: Bao, Gøran, Håvard.
 
 CC=arm-none-eabi-gcc
 LD=arm-none-eabi-gcc
@@ -8,12 +7,15 @@ OBJCOPY=arm-none-eabi-objcopy
 
 WARNING_FLAGS=-Wall -Wextra -Werror -pedantic
 OPTIMIZATION_FLAGS=-O3
+
 CFLAGS=-mcpu=cortex-m3 -mthumb -g -std=c99 $(OPTIMIZATION_FLAGS)  $(WARNING_FLAGS)
-LDFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS) -lgcc -lc -lcs3 -lcs3unhosted -lefm32gg -Llib 
+LDFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS) -lm -lgcc -lc -lcs3 -lcs3unhosted -lefm32gg -Llib 
 ASFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS)
 LINKERSCRIPT=lib/efm32gg.ld
 
 .PHONY: clean upload
+
+all: upload
 
 upload: ex2.bin
 	-eACommander.sh -r --address 0x00000000 -f "ex2.bin" -r
