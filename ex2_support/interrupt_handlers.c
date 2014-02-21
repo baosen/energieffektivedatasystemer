@@ -1,3 +1,6 @@
+#ifndef INTERRUPT_HANDLERS_C_INCLUDED_908928323
+#define INTERRUPT_HANDLERS_C_INCLUDED_908928323
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -25,8 +28,6 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 		counter = 0;
 		*GPIO_PA_DOUT = ~*GPIO_PA_DOUT;
 	}
-	
-		
 }
 
 /* GPIO even pin interrupt handler */
@@ -42,3 +43,5 @@ void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()
     /* TODO handle button pressed event, remember to clear pending interrupt */
 	*GPIO_IFC = 0xFF;
 }
+
+#endif

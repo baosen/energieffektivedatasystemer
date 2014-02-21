@@ -1,3 +1,6 @@
+#ifndef EFM32GG_H_INCLUDED_89712837123
+#define EFM32GG_H_INCLUDED_89712837123
+
 #include <stdint.h>
 
 // GPIO
@@ -141,3 +144,4 @@
 #define SYSTICK_CTRL ((volatile uint32_t*)0xe000e010)
 #define SYSTICK_LOAD ((volatile uint32_t*)0xe000e014)
 
+#endif

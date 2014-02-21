@@ -1,7 +1,10 @@
-#include <stdint.h>
-#include <stdbool.h>
+#ifndef GPIO_H_INCLUDED_92389283
+#define GPIO_H_INCLUDED_92389283
 
 #include "efm32gg.h"
+
+#include <stdint.h>
+#include <stdbool.h>
 
 /* function to set up GPIO mode and interrupts*/
 void setupGPIO()
@@ -24,3 +27,5 @@ void setupGPIO()
   *GPIO_EXTIRISE = 0xff;
   *GPIO_IEN = 0xff;
 }
+
+#endif

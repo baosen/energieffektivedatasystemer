@@ -1,3 +1,6 @@
+#ifndef TIMER_C_INCLUDED_908129038901283901823
+#define TIMER_C_INCLUDED_908129038901283901823
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -22,4 +25,4 @@ void setupTimer(uint16_t period)
    *TIMER1_CMD = 1;
 }
 
-
+#endif

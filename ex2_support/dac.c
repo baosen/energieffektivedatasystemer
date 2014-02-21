@@ -1,3 +1,6 @@
+#ifndef DAC_C_INCLUDED_908120938129083
+#define DAC_C_INCLUDED_908120938129083
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -20,3 +23,5 @@ void setupDAC()
   *DAC0_CH1CTRL = 1;
   //4.
 }
+
+#endif
