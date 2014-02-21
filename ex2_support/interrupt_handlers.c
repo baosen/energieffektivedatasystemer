@@ -12,16 +12,14 @@
 static int counter = 0;
 static int asd = 0;
 
-void generateSinusSoundWave() 
+void generateSinusSoundWave(int amplitude) 
 {
     if (asd >= 2 * PI) { // to make sure the int does not overflow.
         asd = 0;
     }
 
-    const int AMPLITUDE = 10000; // Determines its volume.
-
-    *DAC0_CH0DATA = AMPLITUDE * sin(asd);
-    *DAC0_CH1DATA = AMPLITUDE * sin(asd);
+    *DAC0_CH0DATA = amplitude * sin(asd);
+    *DAC0_CH1DATA = amplitude * sin(asd);
 
     asd++;
 }
@@ -55,7 +53,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	*TIMER1_IFC = 1; // Reset timers interrupt flag.
 
     //generateSawtoothWave();
-    generateSinusSoundWave();
+    generateSinusSoundWave(10000);
 }
 
 /* GPIO even pin interrupt handler */

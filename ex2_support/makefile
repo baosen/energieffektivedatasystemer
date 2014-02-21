@@ -8,7 +8,7 @@ OBJCOPY=arm-none-eabi-objcopy
 WARNING_FLAGS=-Wall -Wextra -Werror -pedantic
 OPTIMIZATION_FLAGS=-O3
 
-CFLAGS=-mcpu=cortex-m3 -mthumb -g -std=c99 $(OPTIMIZATION_FLAGS)  $(WARNING_FLAGS)
+CFLAGS=-mcpu=cortex-m3 -mthumb -g -std=c99 $(OPTIMIZATION_FLAGS) $(WARNING_FLAGS)
 LDFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS) -lm -lgcc -lc -lcs3 -lcs3unhosted -lefm32gg -Llib 
 ASFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS)
 LINKERSCRIPT=lib/efm32gg.ld
