@@ -16,27 +16,13 @@
     you want to generate. 
 */
 
-// Sound frequencies for different notes in the 6th octave. Use floating-point numbers or fixed-point?
-enum {
-    NOTE_C6   = 1046,
-    NOTE_C6D6 = 1108,
-    NOTE_D6   = 1174,
-    NOTE_D6E6 = 1244,
-    NOTE_E6   = 1318,
-    NOTE_F6   = 1396,
-    NOTE_F6G6 = 1479,
-    NOTE_G6   = 1567,
-    NOTE_G6A6 = 1661,
-    NOTE_A6   = 1760,
-    NOTE_A6B6 = 1864,
-    NOTE_B6   = 1975
-};
-
-// TODO: Dette er sikkert feil.
 /* The waiting period between each interrupt in clock cycles */
 #define CLOCK_SPEED 14000000 // The core clock (which the timer clock is derived from) runs at 14 MHz by default. */
-//static const uint16_t SAMPLE_PERIOD = CLOCK_SPEED / (NOTE_E6 - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
-static const uint16_t SAMPLE_PERIOD = 0;
+
+//static const uint16_t SAMPLE_PERIOD = CLOCK_SPEED / (NOTE_E6 - 1); 
+#define SAMPLING_RATE 44100
+
+static const uint16_t SAMPLE_PERIOD = CLOCK_SPEED / (SAMPLING_RATE - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
 
 
 void setupPeripheral(void)
@@ -44,6 +30,7 @@ void setupPeripheral(void)
     /* Call the peripheral setup functions */
     setupGPIO();
     setupDAC();
+    //setupTimer(SAMPLE_PERIOD); 
     setupTimer(SAMPLE_PERIOD); 
     setupNVIC(); /* Enable interrupt handling */
 }

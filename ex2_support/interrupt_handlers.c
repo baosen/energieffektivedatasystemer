@@ -9,30 +9,47 @@
 
 #include "efm32gg.h"
 
+// Sound frequencies for different notes in the 6th octave. Use floating-point numbers or fixed-point?
+enum {
+    NOTE_C6   = 1046,
+    NOTE_C6D6 = 1108,
+    NOTE_D6   = 1174,
+    NOTE_D6E6 = 1244,
+    NOTE_E6   = 1318,
+    NOTE_F6   = 1396,
+    NOTE_F6G6 = 1479,
+    NOTE_G6   = 1567,
+    NOTE_G6A6 = 1661,
+    NOTE_A6   = 1760,
+    NOTE_A6B6 = 1864,
+    NOTE_B6   = 1975
+};
+
 static int counter = 0;
-static double asd = 0;
+double increment = 0;
 
 // TODO:  Er dette riktig? Nei, det er ikke. Tror ikke det er mulig å generere en sinus-kurve programmatisk pga for mye overhead.
-void generateSinusSoundWave(int amplitude) 
+inline void generateSinusSoundWave(int amplitude) 
 {
-    if (asd >= 2 * PI) { // to make sure the int does not overflow.
-        asd = 0;
+    *DAC0_CH0DATA = amplitude * sin(increment);
+    *DAC0_CH1DATA = amplitude * sin(increment);
+
+    //increment += ((2 * PI) / (14000000 / 1046));
+    increment += (2 * PI) / (44100 / NOTE_C6);
+
+    if (increment >= 1) { // to make sure the int does not overflow.
+        increment -= 1;
     }
-
-    *DAC0_CH0DATA = amplitude * sin(asd);
-    *DAC0_CH1DATA = amplitude * sin(asd);
-
-    asd += ((2 * PI) / (14000000 / 1046));
 }
 
 void generateSawtoothWave() // makes my ears bleed.
 {
-	asd += 1000;
-	if (asd > 3830){
-		asd = 0;
+	increment += 1000;
+	if (increment > 3830){
+		increment = 0;
 	}
-	*DAC0_CH0DATA = asd;	
-	*DAC0_CH1DATA = asd;	
+	*DAC0_CH0DATA = increment;	
+	*DAC0_CH1DATA = increment;	
 }
 
 void makeLEDsBlink()
@@ -54,7 +71,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	*TIMER1_IFC = 1; // Reset timers interrupt flag.
 
     //generateSawtoothWave();
-    generateSinusSoundWave(100000);
+    generateSinusSoundWave(1000);
 }
 
 /* GPIO even pin interrupt handler */
