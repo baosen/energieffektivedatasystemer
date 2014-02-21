@@ -13,18 +13,19 @@ LDFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS) -lgcc -lc -lcs3 -lcs3un
 ASFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS)
 LINKERSCRIPT=lib/efm32gg.ld
 
+.PHONY: clean upload
+
+upload: ex2.bin
+	-eACommander.sh -r --address 0x00000000 -f "ex2.bin" -r
+
 ex2.bin: ex2.elf
 	${OBJCOPY} -O binary $< $@
 
 ex2.elf: ex2.o
 	${LD} -T ${LINKERSCRIPT} $^ -o $@ ${LDFLAGS} 
 
-ex2.c: timer.c dac.c gpio.c interrupt_handlers.c nvic.c
+ex2.o: ex2.c timer.c dac.c gpio.c interrupt_handlers.c nvic.c
 	${CC} ${CFLAGS} -c $< -o $@
-
-.PHONY: clean upload
-upload: ex2.bin
-	-eACommander.sh -r --address 0x00000000 -f "ex2.bin" -r
 
 clean:
 	-rm -rf *.o *.elf *.bin *.hex 
