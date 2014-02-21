@@ -13,13 +13,13 @@
 
 /* 
     TODO: calculate the appropriate sample period for the sound wave(s) 
-    you want to generate. The core clock (which the timer clock is derived
-    from) runs at 14 MHz by default. Also remember that the timer counter
-    registers are 16 bits.
+    you want to generate. 
 */
 
 /* The waiting period between each interrupt in clock cycles */
-static const int SAMPLE_PERIOD = 5000;
+#define CLOCK_SPEED 14000000 // The core clock (which the timer clock is derived from) runs at 14 MHz by default. */
+#define SOUND_FREQUENCY 1046 // C6
+static const uint16_t SAMPLE_PERIOD = CLOCK_SPEED / (SOUND_FREQUENCY - 1); // Also remember that the timer counter registers are 16 bits.
 
 void setupPeripheral(void)
 {
@@ -30,6 +30,12 @@ void setupPeripheral(void)
     setupNVIC(); /* Enable interrupt handling */
 }
 
+void wait_for_interrupt()
+{
+    *SCR = 6; // deep sleep i think.
+    __asm__("wfi"); // wait for interrupt in asm.
+}
+
 /* Your code will start executing here */
 int main(void) 
 { 
@@ -37,10 +43,6 @@ int main(void)
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
         instead of infinite loop for busy-waiting. */
-    //for (;;) {
-    //    *SCR = 6;
-    //    __asm__("wfi");
-    //}
     return EXIT_SUCCESS;
 }
 
