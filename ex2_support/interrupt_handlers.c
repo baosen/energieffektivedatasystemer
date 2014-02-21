@@ -22,6 +22,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	}
 	
 	*DAC0_CH0DATA = asd;	
+	*DAC0_CH1DATA = asd;	
 	
 	counter++;
 	if (counter == 10000){

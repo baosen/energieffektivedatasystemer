@@ -25,8 +25,7 @@ void setupPeripheral(void)
     /* Call the peripheral setup functions */
     setupGPIO();
     setupDAC();
-    setupTimer(SAMPLE_PERIOD);
-    /* Enable interrupt handling */
+    setupTimer(SAMPLE_PERIOD); /* Enable interrupt handling */
     setupNVIC();
 }
 
@@ -40,17 +39,6 @@ int main(void)
     */
  	return EXIT_SUCCESS; 
 }
-
-void generate_sound ()
-{
-    for (int i = 0; i < 4096; i++) {
-        *DAC0_CH0DATA = i;
-    }
-    for (int i = 2048; i > 0; i = i-2) {
-        *DAC0_CH0DATA = i;
-    }
-}
-
 
 /* if other interrupt handlers are needed, use the following names: 
    NMI_Handler
