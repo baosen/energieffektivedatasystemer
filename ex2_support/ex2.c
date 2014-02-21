@@ -1,9 +1,10 @@
+#include "gpio.h" // our code.
+
+#include "efm32gg.h" // given code.
+
 #include <stdint.h>
 #include <stdbool.h>
-
-//#include <stdlib.h>
-
-#include "efm32gg.h"
+#include <stdlib.h>
 
 /* 
   TODO calculate the appropriate sample period for the sound wave(s) 
@@ -12,40 +13,42 @@
   registers are 16 bits.
 */
 /* The period between sound samples, in clock cycles */
-#define   SAMPLE_PERIOD   0x008C
-
+const int SAMPLE_PERIOD = 0x008C;
 
 /* Declaration of peripheral setup functions */
 void setupTimer(uint32_t period);
 void setupDAC();
 void setupNVIC();
 
-/* Your code will start executing here */
-int main(void) 
-{ 
-  //srand(0);
- 
+void setupPeripheral()
+{
   /* Call the peripheral setup functions */
   setupGPIO();
   setupDAC();
   setupTimer(SAMPLE_PERIOD);
-  
   /* Enable interrupt handling */
   setupNVIC();
-  
+}
+
+/* Your code will start executing here */
+int main(void) 
+{ 
+    setupPeripheral();
+	
   /* TODO for higher energy efficiency, sleep while waiting for interrupts
      instead of infinite loop for busy-waiting
   */
- 	return 0; 
- 
+ 	return EXIT_SUCCESS; 
 }
-void sound(){
-for (int i = 0; i < 4096; i++) {
-             *DAC0_CH0DATA = i;
-        }
-for (int i = 2048; i > 0; i = i-2) {
-             *DAC0_CH0DATA = i;
-        }
+
+void generate_sound ()
+{
+    for (int i = 0; i < 4096; i++) {
+        *DAC0_CH0DATA = i;
+    }
+    for (int i = 2048; i > 0; i = i-2) {
+        *DAC0_CH0DATA = i;
+    }
 }
 
 void setupNVIC()
@@ -58,7 +61,6 @@ void setupNVIC()
      assignment.
   */
 	*ISER0 = 0x1802;
-	
 }
 
 /* if other interrupt handlers are needed, use the following names: 

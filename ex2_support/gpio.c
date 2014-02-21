@@ -24,6 +24,3 @@ void setupGPIO()
   *GPIO_EXTIRISE = 0xff;
   *GPIO_IEN = 0xff;
 }
-
-
-
