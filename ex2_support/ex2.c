@@ -32,9 +32,12 @@ enum {
     NOTE_B6   = 1975
 };
 
+// TODO: Dette er sikkert feil.
 /* The waiting period between each interrupt in clock cycles */
 #define CLOCK_SPEED 14000000 // The core clock (which the timer clock is derived from) runs at 14 MHz by default. */
-static const uint16_t SAMPLE_PERIOD = CLOCK_SPEED / (NOTE_E6 - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
+//static const uint16_t SAMPLE_PERIOD = CLOCK_SPEED / (NOTE_E6 - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
+static const uint16_t SAMPLE_PERIOD = 0;
+
 
 void setupPeripheral(void)
 {

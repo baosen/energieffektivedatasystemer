@@ -10,8 +10,9 @@
 #include "efm32gg.h"
 
 static int counter = 0;
-static int asd = 0;
+static double asd = 0;
 
+// TODO:  Er dette riktig? Nei, det er ikke. Tror ikke det er mulig å generere en sinus-kurve programmatisk pga for mye overhead.
 void generateSinusSoundWave(int amplitude) 
 {
     if (asd >= 2 * PI) { // to make sure the int does not overflow.
@@ -21,7 +22,7 @@ void generateSinusSoundWave(int amplitude)
     *DAC0_CH0DATA = amplitude * sin(asd);
     *DAC0_CH1DATA = amplitude * sin(asd);
 
-    asd++;
+    asd += ((2 * PI) / (14000000 / 1046));
 }
 
 void generateSawtoothWave() // makes my ears bleed.
@@ -53,7 +54,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	*TIMER1_IFC = 1; // Reset timers interrupt flag.
 
     //generateSawtoothWave();
-    generateSinusSoundWave(10000);
+    generateSinusSoundWave(100000);
 }
 
 /* GPIO even pin interrupt handler */
