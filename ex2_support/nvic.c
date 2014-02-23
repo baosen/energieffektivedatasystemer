@@ -3,7 +3,8 @@
 
 #include "efm32gg.h"
 
-void setupNVIC(void)
+/* Enable interrupt handling */
+void setup_nvic(void)
 {
   /* TODO use the NVIC ISERx registers to enable handling of interrupt(s)
      remember two things are necessary for interrupt handling:

@@ -8,39 +8,35 @@
 
 /* TODO set input and output pins for the joystick */
 /* enable joystick/gamepad one the device for use */
-void enableJoystick(void)
+static void enable_joystick(void)
 {
-    *GPIO_PC_MODEL = 0x33333333;
+    *GPIO_PC_MODEL  = 0x33333333;
     *GPIO_EXTIPSELL = 0x22222222;
-    *GPIO_EXTIFALL = 0xff;
-    *GPIO_EXTIRISE = 0xff;
-    *GPIO_IEN = 0xff;
+    *GPIO_EXTIFALL  = 0xff;
+    *GPIO_EXTIRISE  = 0xff;
+    *GPIO_IEN       = 0xff;
+	*GPIO_IFC       = 0xff;
 }
 
-inline void turnOffAllLEDs() 
-{
-    *GPIO_PA_DOUT |= 0xFF00;  // Turn off LEDs D4-D8 (LEDs are active low). Also makes sure the bits in GPIO_PA_DOUT is kept by using an OR mask.
+// Enable GPIO clock to drive the GPIO outputs.
+static void enable_gpio_clock() 
+{ 
+    *CMU_HFPERCLKEN0 |= CMU2_HFPERCLKEN0_GPIO; 
 }
 
-inline void turnOnAllLEDs()
+// Enable GPIO output to output current to the LEDs.
+static void enable_gpio_outputs()
 {
-    *GPIO_PA_DOUT &= 0x00FF;  // Turn on LEDs D4-D8 (LEDs are active low). Also makes sure the bits in GPIO_PA_DOUT is kept by using an AND mask.
+    *GPIO_PA_CTRL = 2;                         /* set high drive strength */
+    *GPIO_PA_MODEH = 0x55555555;               /* set pins A8-15 as output */
 }
 
-/* function to set up GPIO mode and interrupts*/
-void setupGPIO()
+// Function to set up GPIO mode and interrupts.
+void setup_gpio()
 {
-    /* Example of HW access from C code: turn on joystick LEDs D4-D8
-       check efm32gg.h for other useful register definitions
-    */
-    *CMU_HFPERCLKEN0 |= CMU2_HFPERCLKEN0_GPIO; /* enable GPIO clock*/
-    *GPIO_PA_CTRL = 2;  /* set high drive strength */
-    *GPIO_PA_MODEH = 0x55555555; /* set pins A8-15 as output */
-
-    turnOnAllLEDs();
-    turnOffAllLEDs();
-
-    enableJoystick();
+    enable_gpio_clock();
+    enable_gpio_outputs();
+    enable_joystick();
 }
 
 #endif

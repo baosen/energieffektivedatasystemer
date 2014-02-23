@@ -44,6 +44,7 @@
 #define GPIO_EXTIRISE  ((volatile uint32_t*)(GPIO_PA_BASE + 0x108))
 #define GPIO_EXTIFALL  ((volatile uint32_t*)(GPIO_PA_BASE + 0x10c))
 #define GPIO_IEN       ((volatile uint32_t*)(GPIO_PA_BASE + 0x110))
+#define GPIO_IF        ((volatile uint32_t*)(GPIO_PA_BASE + 0x114))
 #define GPIO_IFC       ((volatile uint32_t*)(GPIO_PA_BASE + 0x11c))
 
 // CMU
@@ -136,6 +137,8 @@
 
 #define PRS_BASE 0x400cc000
 
+#define PRS_SWPULSE ((volatile uint32_t*)PRS_BASE + 0x000) // me added.
+#define PRS_SWLEVEL ((volatile uint32_t*)PRS_BASE + 0x004) // me added.
 #define PRS_CH0_CTRL ((volatile uint32_t*)(PRS_BASE + 0x010))
 
 // System Control Block

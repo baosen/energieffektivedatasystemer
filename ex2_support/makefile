@@ -7,9 +7,10 @@ OBJCOPY=arm-none-eabi-objcopy
 
 WARNING_FLAGS=-Wall -Wextra -Werror -pedantic
 OPTIMIZATION_FLAGS=-O3
+LIBRARY_FLAGS=-lm -lgcc -lc -lcs3 -lcs3unhosted -lefm32gg
 
 CFLAGS=-mcpu=cortex-m3 -mthumb -g -std=c99 $(OPTIMIZATION_FLAGS) $(WARNING_FLAGS)
-LDFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS) -lm -lgcc -lc -lcs3 -lcs3unhosted -lefm32gg -Llib 
+LDFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS) $(LIBRARY_FLAGS) -Llib 
 ASFLAGS=-mcpu=cortex-m3 -mthumb -g $(OPTIMIZATION_FLAGS)
 LINKERSCRIPT=lib/efm32gg.ld
 
@@ -26,7 +27,7 @@ ex2.bin: ex2.elf
 ex2.elf: ex2.o
 	${LD} -T ${LINKERSCRIPT} $^ -o $@ ${LDFLAGS} 
 
-ex2.o: ex2.c timer.c dac.c gpio.c interrupt_handlers.c nvic.c
+ex2.o: ex2.c timer1.c dac.c gpio.c interrupt_handlers.c nvic.c prs.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
