@@ -1,12 +1,9 @@
-#ifndef TIMER1_C_INCLUDED_908129038901283901823
-#define TIMER1_C_INCLUDED_908129038901283901823
+#include "timer1.h"
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "efm32gg.h"
-
-#define TIMER1_CLOCK_SPEED 14000000 // The core clock (which the timer clock is derived from) runs at 14 MHz by default.
 
 // Setup timer1.
 void setup_timer1(uint16_t period)
@@ -19,5 +16,3 @@ void setup_timer1(uint16_t period)
    // This will cause a timer interrupt to be generated every (period) cycles. 
    // Remember to configure the NVIC as well, otherwise the interrupt handler will not be invoked.
 }
-
-#endif

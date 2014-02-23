@@ -1,22 +1,12 @@
-#ifndef INTERRUPT_HANDLERS_C_INCLUDED_908928323
-#define INTERRUPT_HANDLERS_C_INCLUDED_908928323
+#include "interrupt_handlers.h"
+#include "notes.h"
 
-#include <stdint.h>
-#include <stdbool.h>
-
-#include <math.h>
-#define PI 3.14159265
-
-#include "efm32gg.h"
-
-#include "led.c"
-#include "notes.c"
-
+/*
 static int counter = 0;
 static double increment = 0;
 
 // TODO:  Er dette riktig? Nei, det er ikke. Tror ikke det er mulig å generere en sinus-kurve programmatisk pga for mye overhead.
-void generate_sinus_sound_wave(int amplitude) 
+static void generate_sinus_sound_wave(int amplitude) 
 {
     *DAC0_CH0DATA = amplitude * sin(increment);
     *DAC0_CH1DATA = amplitude * sin(increment);
@@ -29,7 +19,7 @@ void generate_sinus_sound_wave(int amplitude)
     }
 }
 
-void generate_sawtooth_sound_wave()
+static void generate_sawtooth_sound_wave()
 {
 	increment += 1000;
 	if (increment > 3830){
@@ -39,19 +29,16 @@ void generate_sawtooth_sound_wave()
 	*DAC0_CH1DATA = increment;	
 }
 
-void make_leds_blink()
+static void make_leds_blink()
 {
 	counter++;
 	if (counter == 50000){
 		counter = 0;
-		//*GPIO_PA_DOUT = ~*GPIO_PA_DOUT;
-        if (PTR_TO_LEDS->d1 == ON) {
-            PTR_TO_LEDS->d1 = OFF;
-        } else {
-            PTR_TO_LEDS->d1 = ON;
-        }
+		*GPIO_PA_DOUT = ~*GPIO_PA_DOUT;
 	}
 }
+
+*/
 
 /* TIMER1 interrupt handler */
 void __attribute__ ((interrupt)) TIMER1_IRQHandler() 
@@ -84,5 +71,3 @@ void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()  // TODO: Fix this. Does 
 	*GPIO_IFC = 0xff;
     //*GPIO_PA_DOUT >>= 1;
 }
-
-#endif

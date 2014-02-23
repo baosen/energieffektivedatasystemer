@@ -1,7 +1,4 @@
-#ifndef LED_C_INCLUDED_29839283
-#define LED_C_INCLUDED_29839283
-
-#include "efm32gg.h"
+#include "led.h"
 
 // The structure for controlling the LEDs. 
 // Using a bitfield simplifies enabling/disabling each LED and you also get typechecking.
@@ -18,11 +15,6 @@ typedef struct {
     unsigned int    : 16;
 } leds;
 
-// The state of an LED.
-typedef enum {
-    ON  = 0, // The LED is lit.
-    OFF = 1 // The LED is not lit.
-} led_state;
 
 #define PTR_TO_LEDS ((volatile leds*)(GPIO_PA_BASE + 0x0c))
 
@@ -41,4 +33,3 @@ void set_d6_led_state(led_state led_state) { PTR_TO_LEDS->d6 = led_state; }
 void set_d7_led_state(led_state led_state) { PTR_TO_LEDS->d7 = led_state; }
 void set_d8_led_state(led_state led_state) { PTR_TO_LEDS->d8 = led_state; }
 
-#endif

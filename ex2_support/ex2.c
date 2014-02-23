@@ -1,17 +1,16 @@
+#include "timer1.h"
+#include "gpio.h"
+#include "nvic.h"
+#include "led.h"
+#include "dac.h"
+#include "prs.h"
+#include "interrupt_handlers.h"
+
 #include "efm32gg.h"
 
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
-// The .c files is included directly to help the compiler do hardcore super uber optimisation tricks (inlining, function unrolling etc...).
-#include "nvic.c"
-#include "gpio.c"
-#include "led.c"
-#include "timer1.c"
-#include "dac.c"
-#include "prs.c"
-#include "interrupt_handlers.c"
 
 /* 
     TODO: calculate the appropriate sample period for the sound wave(s) 
@@ -55,7 +54,7 @@ int main(void)
     set_d1_led_state(ON);
     set_d2_led_state(OFF);
     set_d3_led_state(OFF);
-    set_d4_led_state(OFF);
+    set_d4_led_state(ON);
     set_d5_led_state(OFF);
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts

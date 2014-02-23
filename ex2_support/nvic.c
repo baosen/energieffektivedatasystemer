@@ -1,7 +1,4 @@
-#ifndef NVIC_C_INCLUDED_901823908
-#define NVIC_C_INCLUDED_901823908
-
-#include "efm32gg.h"
+#include "nvic.h"
 
 /* Enable interrupt handling */
 void setup_nvic(void)
@@ -15,5 +12,3 @@ void setup_nvic(void)
   */
 	*ISER0 = 0x1802;
 }
-
-#endif

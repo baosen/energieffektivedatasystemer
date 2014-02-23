@@ -1,10 +1,4 @@
-#ifndef GPIO_H_INCLUDED_92389283
-#define GPIO_H_INCLUDED_92389283
-
-#include "efm32gg.h"
-
-#include <stdint.h>
-#include <stdbool.h>
+#include "gpio.h"
 
 /* TODO set input and output pins for the joystick */
 /* enable joystick/gamepad one the device for use */
@@ -39,4 +33,3 @@ void setup_gpio()
     enable_joystick();
 }
 
-#endif
