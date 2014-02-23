@@ -17,7 +17,8 @@
     you want to generate. 
 */
 
-#define SAMPLING_RATE 44100        // The number of samples played each seconds.
+// The number of samples played each seconds.
+#define SAMPLING_RATE 44100
 
 //static const uint16_t SAMPLE_PERIOD = TIMER_CLOCK_SPEED / (NOTE_E6 - 1); 
 
@@ -26,7 +27,7 @@ static const uint16_t SAMPLE_PERIOD = TIMER1_CLOCK_SPEED / (SAMPLING_RATE - 1); 
 
 
 /* Call the peripheral setup functions */
-void setup_peripheral(void)
+static void setup_peripheral(void)
 {
     setup_gpio();
     setup_dac();
@@ -35,12 +36,11 @@ void setup_peripheral(void)
     setup_nvic(); 
 }
 
-// Not currently used.
-void wait_for_interrupt()
+// NOTE: Not currently used.
+static void wait_for_interrupt()
 {
-    *SCR = 6; // deep sleep i think.
+    *SCR = 6;       // deep sleep I think.
     __asm__("wfi"); // wait for interrupt in asm.
-    // __WFI(); // The "official" way.
 }
 
 // Your code will start executing here.
@@ -48,13 +48,13 @@ int main(void)
 { 
     setup_peripheral();
 
-    turn_on_all_leds();
     turn_off_all_leds();
+    turn_on_all_leds();
 
-    set_d1_led_state(ON);
+    //set_d1_led_state(ON);
     set_d2_led_state(OFF);
     set_d3_led_state(OFF);
-    set_d4_led_state(ON);
+    //set_d4_led_state(ON);
     set_d5_led_state(OFF);
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
