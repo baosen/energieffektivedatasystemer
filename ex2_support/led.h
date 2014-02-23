@@ -1,5 +1,5 @@
-#ifndef LED_C_INCLUDED_29839283
-#define LED_C_INCLUDED_29839283
+#ifndef LED_H_INCLUDED_29839283
+#define LED_H_INCLUDED_29839283
 
 #include "efm32gg.h"
 
