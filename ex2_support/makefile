@@ -24,7 +24,7 @@ upload: ex2.bin
 ex2.bin: ex2.elf
 	${OBJCOPY} -O binary $< $@
 
-ex2.elf: ex2.c timer1.o dac.o gpio.o nvic.o prs.o led.o interrupt_handlers.o
+ex2.elf: ex2.c timer1.o dac.o gpio.o nvic.o prs.o led.o interrupt_handlers.o sound.o
 	${LD} -T ${LINKERSCRIPT} $^ -o $@ ${LDFLAGS} 
 
 timer1.o: timer1.c timer1.h
@@ -46,6 +46,9 @@ led.o: led.c led.h
 	${CC} ${CFLAGS} -c $< -o $@
 
 interrupt_handlers.o: interrupt_handlers.c interrupt_handlers.h
+	${CC} ${CFLAGS} -c $< -o $@
+
+sound.o: sound.c sound.h
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:

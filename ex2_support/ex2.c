@@ -5,6 +5,7 @@
 #include "dac.h"
 #include "prs.h"
 #include "interrupt_handlers.h"
+#include "sound.h"
 
 #include "efm32gg.h"
 
@@ -47,13 +48,7 @@ int main(void)
     setup_peripheral();
 
     turn_off_all_leds();
-    turn_on_all_leds();
-
-    //set_d1_led_state(ON);
-    set_d2_led_state(OFF);
-    set_d3_led_state(OFF);
-    //set_d4_led_state(ON);
-    set_d5_led_state(OFF);
+    set_d1_led_state(ON); 
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
         instead of infinite loop for busy-waiting. */

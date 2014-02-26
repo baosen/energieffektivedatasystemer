@@ -1,16 +1,18 @@
-#ifndef SOUND_H_INCLUDED_9839283
-#define SOUND_H_INCLUDED_9839283
+#include "sound.h"
+#include "dac.h"
 
 #include "efm32gg.h"
 
-void generate_sound()
+static int volume_ = DEFAULT_VOLUME_VALUE; 
+
+void generate_sawtooth_wave_sound()
 {
-    for (int i = 0; i < 4096; i++) {
-        *DAC0_CH0DATA = i;
-    }
-    for (int i = 2048; i > 0; i = i-2) {
-        *DAC0_CH0DATA = i;
+    for (int number = 0; number < 2048; number++) {
+        write_data_to_dac0_ch0data(number * volume_);
     }
 }
 
-#endif
+void set_volume(int volume) 
+{
+    volume_ = volume;
+}
