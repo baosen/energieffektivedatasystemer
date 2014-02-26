@@ -20,8 +20,6 @@
 // The number of samples played each seconds.
 #define SAMPLING_RATE 44100
 
-//static const uint16_t SAMPLE_PERIOD = TIMER_CLOCK_SPEED / (NOTE_E6 - 1); 
-
 /* The waiting period between each interrupt in clock cycles */
 static const uint16_t SAMPLE_PERIOD = TIMER1_CLOCK_SPEED / (SAMPLING_RATE - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
 
@@ -36,7 +34,7 @@ static void setup_peripheral(void)
     setup_nvic(); 
 }
 
-// NOTE: Not currently used.
+// TODO: Not currently used.
 static void wait_for_interrupt()
 {
     *SCR = 6;       // deep sleep I think.

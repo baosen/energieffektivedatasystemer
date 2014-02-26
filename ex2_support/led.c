@@ -23,7 +23,7 @@ void turn_off_all_leds() { *GPIO_PA_DOUT |= 0xFF00; }
 // Turn on LEDs D4-D8 (LEDs are active low). Also makes sure the bits in GPIO_PA_DOUT is kept by using an AND mask.
 void turn_on_all_leds() { *GPIO_PA_DOUT &= 0x00FF; }
 
-// Turn a led off and on by setting its state.
+// Turn a led off and on by setting its state. Set led_state == ON to turn on and led_state = OFF to turn off.
 void set_d1_led_state(led_state led_state) { PTR_TO_LEDS->d1 = led_state; }
 void set_d2_led_state(led_state led_state) { PTR_TO_LEDS->d2 = led_state; }
 void set_d3_led_state(led_state led_state) { PTR_TO_LEDS->d3 = led_state; } 
