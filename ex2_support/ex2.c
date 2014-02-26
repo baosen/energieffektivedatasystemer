@@ -35,20 +35,20 @@ static void setup_peripheral(void)
     setup_nvic(); 
 }
 
-// TODO: Not currently used.
 static void wait_for_interrupt()
 {
-    *SCR = 6;       // deep sleep I think.
-    __asm__("wfi"); // wait for interrupt in asm.
+    *SCR = 6;       // Make device go into deep sleep.
+    __asm__("wfi"); // Wait for interrupt in asm.
 }
 
 // Your code will start executing here.
 int main(void) 
 { 
     setup_peripheral();
-
     turn_off_all_leds();
-    set_d8_led_state(ON); 
+    for (;;) {
+        wait_for_interrupt();
+    }
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
         instead of infinite loop for busy-waiting. */

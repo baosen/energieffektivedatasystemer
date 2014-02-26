@@ -137,8 +137,6 @@
 
 #define PRS_BASE 0x400cc000
 
-#define PRS_SWPULSE ((volatile uint32_t*)PRS_BASE + 0x000) // me added.
-#define PRS_SWLEVEL ((volatile uint32_t*)PRS_BASE + 0x004) // me added.
 #define PRS_CH0_CTRL ((volatile uint32_t*)(PRS_BASE + 0x010))
 
 // System Control Block
