@@ -21,7 +21,7 @@
 // The number of samples played each seconds.
 #define SAMPLING_RATE 44100
 
-/* The waiting period between each interrupt in clock cycles */
+// The waiting period between each interrupt in clock cycles.
 static const uint16_t SAMPLE_PERIOD = TIMER1_CLOCK_SPEED / (SAMPLING_RATE - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
 
 
@@ -48,7 +48,7 @@ int main(void)
     setup_peripheral();
 
     turn_off_all_leds();
-    set_d1_led_state(ON); 
+    set_d8_led_state(ON); 
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
         instead of infinite loop for busy-waiting. */

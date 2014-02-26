@@ -5,7 +5,7 @@
 
 static int volume_ = DEFAULT_VOLUME_VALUE; 
 
-void generate_sawtooth_wave_sound()
+void generate_sawtooth_wave_sample()
 {
     for (int number = 0; number < 2048; number++) {
         write_data_to_dac0_ch0data(number * volume_);
