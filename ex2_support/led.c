@@ -33,3 +33,12 @@ void set_d6_led_state(led_state led_state) { PTR_TO_LEDS->d6 = led_state; }
 void set_d7_led_state(led_state led_state) { PTR_TO_LEDS->d7 = led_state; }
 void set_d8_led_state(led_state led_state) { PTR_TO_LEDS->d8 = led_state; }
 
+// Check if a LED is on or off.
+int is_d1_on() { return PTR_TO_LEDS->d1 == 0; }
+int is_d2_on() { return PTR_TO_LEDS->d2 == 0; }
+int is_d3_on() { return PTR_TO_LEDS->d3 == 0; }
+int is_d4_on() { return PTR_TO_LEDS->d4 == 0; }
+int is_d5_on() { return PTR_TO_LEDS->d5 == 0; }
+int is_d6_on() { return PTR_TO_LEDS->d6 == 0; }
+int is_d7_on() { return PTR_TO_LEDS->d7 == 0; }
+int is_d8_on() { return PTR_TO_LEDS->d8 == 0; }

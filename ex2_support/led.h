@@ -24,4 +24,14 @@ void set_d6_led_state(led_state led_state);
 void set_d7_led_state(led_state led_state);
 void set_d8_led_state(led_state led_state);
 
+// Check if a LED is on or off.
+int is_d1_on(); 
+int is_d2_on();
+int is_d3_on();
+int is_d4_on();
+int is_d5_on();
+int is_d6_on();
+int is_d7_on();
+int is_d8_on();
+
 #endif
