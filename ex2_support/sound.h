@@ -1,9 +1,11 @@
 #ifndef SOUND_H_INCLUDED
 #define SOUND_H_INCLUDED
 
-#define DEFAULT_VOLUME_VALUE 1
+#define DEFAULT_VOLUME_VALUE 0
 
-void generate_sawtooth_tone(int frequency);
+void setup_sound();
 void set_volume(int volume);
-void generate_note(int volume, int freq);
+void generate_sawtooth_samples(int frequency);
+void generate_square_samples(int frequency);
+
 #endif

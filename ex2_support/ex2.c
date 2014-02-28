@@ -18,19 +18,12 @@
     you want to generate. 
 */
 
-// The number of samples played each seconds.
-#define SAMPLING_RATE 100000
-
-// The waiting period between each interrupt in clock cycles.
-static const uint16_t SAMPLE_PERIOD = TIMER1_CLOCK_SPEED / (SAMPLING_RATE - 1); // Also remember that the timer counter registers are 16 bits. Data type has been set to uint16_t to let the compiler do type checking for me :).
-
 
 /* Call the peripheral setup functions */
 static void setup_peripheral(void)
 {
     setup_gpio();
-    setup_dac();
-    setup_timer1(SAMPLE_PERIOD); 
+    setup_sound();
     //setup_prs();
     setup_nvic(); 
 }
@@ -48,19 +41,7 @@ int main(void)
     setup_peripheral();
     turn_off_all_leds();
 
-  /*  while (1) {
-        int i;
-        int freq = 2048;
-        for (i = 0; i < 20; i++) {
-            //wait_for_interrupt();
-            set_volume(i);
-            generate_sawtooth_tone(freq + i);
-        }
-        for (; i > 0; i -= 2) {
-            set_volume(i);
-            generate_sawtooth_tone(freq + i);
-        }
-    }*/
+    set_volume(1000);
 
     /* TODO for higher energy efficiency, sleep while waiting for interrupts
         instead of infinite loop for busy-waiting. */
