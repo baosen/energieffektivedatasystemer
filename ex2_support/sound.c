@@ -43,7 +43,7 @@ void generate_sawtooth_samples(int frequency, int volume)
 static int square_function(int sample, int number_of_samples, int volume)
 {
     if (sample < (number_of_samples / 2)) {
-        return volume / 2;
+        return volume / 2; // Divide by 2 to make the volume consistent with the sinus sound volume.
     } else {
         return 0;
     }
