@@ -17,4 +17,13 @@ enum {
     NOTE_B6   = 1975
 };
 
+// Tones for 4th octave.
+enum {
+    NOTE_C4 = 262,
+    NOTE_C4SHARP_D4FLAT = 277,
+    NOTE_D4 = 294,
+    NOTE_D4SHARP_E4FLAT = 311,
+    NOTE_E4 = 330
+};
+
 #endif

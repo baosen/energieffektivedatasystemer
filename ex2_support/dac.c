@@ -75,7 +75,13 @@ void setup_dac()
 }
 
 // Write data to DAC0_CH0DATA. Only a value of 12 bits can be written to this memory cell.
-void write_data_to_dac0_ch0data(unsigned int data_to_write) 
+void write_data_to_dac0_ch0data(int data_to_write) 
 {
     *DAC0_CH0DATA = data_to_write;
+}
+//
+// Write data to DAC0_CH1DATA. Only a value of 12 bits can be written to this memory cell.
+void write_data_to_dac0_ch1data(int data_to_write) 
+{
+    *DAC0_CH1DATA = data_to_write;
 }

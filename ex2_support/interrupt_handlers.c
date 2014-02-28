@@ -111,11 +111,23 @@ void __attribute__ ((interrupt)) TIMER0_IRQHandler()
 {
 }
 
+static int note = NOTE_D4;
+static int number = 0;
+
 /* TIMER1 interrupt handler */
 void __attribute__ ((interrupt)) TIMER1_IRQHandler() 
 {  
-    //generate_sawtooth_samples(262);
-    generate_square_samples(262);
+    switch (number % 3) {
+    case 0:
+        generate_square_samples(note, 1000);
+        break;
+    case 1:
+        generate_sawtooth_samples(note, 1000);
+        break;
+    case 2:
+        generate_sinus_samples(note, 1000);
+        break;
+    }
 
 	*TIMER1_IFC = 1; // Reset timers interrupt flag.
 }
@@ -129,5 +141,6 @@ void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler()  // TODO: Fix this. Does
 /* GPIO odd pin interrupt handler */
 void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()  // TODO: Fix this. Does not work.
 {
+    umber++;
 	*GPIO_IFC = *GPIO_IF;
 }
