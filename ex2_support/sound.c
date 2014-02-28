@@ -20,7 +20,8 @@ void setup_sound()
 
 static int linear_function(int sample, int number_of_samples, int volume)
 {
-    return volume / number_of_samples * sample;
+    return volume / number_of_samples * sample; // TODO: Fix truncating of volume / number_of_samples by doing (volume * sample) / number_of_samples instead (it is equivalent.).
+    // TODO: Also, half the volume to make the volume consistent with the sinus wave sound volume.
 }
 
 static int sample_for_sawtooth = 0;
@@ -42,7 +43,7 @@ void generate_sawtooth_samples(int frequency, int volume)
 static int square_function(int sample, int number_of_samples, int volume)
 {
     if (sample < (number_of_samples / 2)) {
-        return volume / 2; // I'm halfing the volume to make it sound equal to other volumes of the other sounds. I don't know exactly why it works, but it seems because of some truncation.
+        return volume / 2;
     } else {
         return 0;
     }
