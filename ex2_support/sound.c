@@ -7,10 +7,10 @@
 #include "math.h"
 
 // The number of samples played each seconds.
-#define SAMPLING_RATE 44800
+#define SAMPLING_RATE 44100
 
 // The waiting period between each interrupt in clock cycles.
-static const uint16_t SAMPLE_PERIOD = TIMER1_CLOCK_SPEED / (SAMPLING_RATE - 1);
+static const uint16_t SAMPLE_PERIOD = (TIMER1_CLOCK_SPEED / SAMPLING_RATE) - 1;
 
 void setup_sound()
 {
@@ -20,7 +20,7 @@ void setup_sound()
 
 static int linear_function(int sample, int number_of_samples, int volume)
 {
-    return volume / number_of_samples * sample; // TODO: Fix truncating of volume / number_of_samples by doing (volume * sample) / number_of_samples instead (it is equivalent.).
+    return (volume * sample) / number_of_samples;
     // TODO: Also, half the volume to make the volume consistent with the sinus wave sound volume.
 }
 
