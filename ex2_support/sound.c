@@ -21,7 +21,6 @@ void setup_sound()
 static int linear_function(int sample, int number_of_samples, int volume)
 {
     return (volume * sample) / number_of_samples;
-    // TODO: Also, half the volume to make the volume consistent with the sinus wave sound volume.
 }
 
 static int sample_for_sawtooth = 0;
@@ -30,7 +29,7 @@ void generate_sawtooth_samples(int frequency, int volume)
 {
     int number_of_samples_to_generate = SAMPLING_RATE / frequency;
 
-    if (sample_for_sawtooth < number_of_samples_to_generate) {
+    if (sample_for_sawtooth <= number_of_samples_to_generate) {
         int data = linear_function(sample_for_sawtooth, number_of_samples_to_generate, volume);
         write_data_to_dac0_ch0data(data);
         write_data_to_dac0_ch1data(data);
@@ -43,24 +42,25 @@ void generate_sawtooth_samples(int frequency, int volume)
 static int square_function(int sample, int number_of_samples, int volume)
 {
     if (sample < (number_of_samples / 2)) {
-        return volume / 2; // Divide by 2 to make the volume consistent with the sinus sound volume.
+        //return volume / 2; // Divide by 2 to make the volume consistent with the sinus sound volume.
+        return volume;
     } else {
         return 0;
     }
 }
 
-static int sample_for_square = 0;
+static int sample_for_square = 1;
 
 void generate_square_samples(int frequency, int volume)
 {
     int number_of_samples_to_generate = SAMPLING_RATE / frequency;
 
-    if (sample_for_square < number_of_samples_to_generate) {
+    if (sample_for_square <= number_of_samples_to_generate) {
         int data = square_function(sample_for_square, number_of_samples_to_generate, volume);
         write_data_to_dac0_ch0data(data);
         write_data_to_dac0_ch1data(data);
     } else {
-        sample_for_square = 0;
+        sample_for_square = 1;
     }
     sample_for_square++;
 }
@@ -83,7 +83,6 @@ static int current_frequency = -1, // -1 is start frequency, just to make sample
            current_volume = -1,    // same here.
            sample_for_sinus = 0;
 
-// TODO: Something wrong with this?
 void generate_sinus_samples(int frequency, int volume)
 {
     int number_of_samples_to_generate = SAMPLING_RATE / frequency;
