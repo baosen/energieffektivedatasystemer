@@ -10,24 +10,13 @@
 #define SAMPLING_RATE 44100
 
 // The waiting period between each interrupt in clock cycles.
-static const uint16_t SAMPLE_PERIOD = (TIMER1_CLOCK_SPEED / SAMPLING_RATE) - 1;
+static const uint16_t SAMPLE_PERIOD = (TIMER1_CLOCK_SPEED / SAMPLING_RATE);
 
 void setup_sound()
 {
     setup_timer1(SAMPLE_PERIOD); 
     setup_dac();
 }
-
-/*
-static int triangle_function(int sample, int number_of_samples, int volume)
-{
-}
-
-static int sample_for_triangle = 0;
-int generate_triangle_samples(int sample, int number_of_samples, int volume)
-{
-}
-*/
 
 static int linear_function(int sample, int number_of_samples, int volume)
 {
@@ -78,8 +67,8 @@ static int sine_wave_table[MAXIMUM_NUMBER_OF_SAMPLES];
 
 #define PI 3.14159265358979323846
 
-// Generates a sinus wave table for a single wave.
-void generate_sinus_wave_table(int number_of_samples, int volume) 
+// Generates a sine wave table for a single wave.
+void generate_sine_wave_table(int number_of_samples, int volume) 
 {
     double delta = (2 * PI) / number_of_samples;
     for (int sample = 0; sample < number_of_samples; sample++) {
@@ -96,7 +85,7 @@ void generate_sinus_samples(int frequency, int volume)
 
     // Check for change of frequency or volume. If yes, generate a new sinus wave table.
     if (current_frequency != frequency || current_volume != volume) { 
-        generate_sinus_wave_table(number_of_samples_to_generate, volume); // because always generating sinus values is toooooo sloooooooow.
+        generate_sine_wave_table(number_of_samples_to_generate, volume); // because always generating sinus values is toooooo sloooooooow.
     }
     current_frequency = frequency;
     current_volume = volume;

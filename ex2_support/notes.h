@@ -1,6 +1,6 @@
 #ifndef NOTES_H_INCLUDED
 #define NOTES_H_INCLUDED
-//
+
 // Tones for 4th octave.
 enum {
     NOTE_C4 = 262,
