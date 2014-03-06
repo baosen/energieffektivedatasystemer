@@ -18,15 +18,16 @@ void setup_sound()
     setup_dac();
 }
 
+/*
 static int triangle_function(int sample, int number_of_samples, int volume)
 {
-    (volume * sample) / 2;
 }
 
 static int sample_for_triangle = 0;
 int generate_triangle_samples(int sample, int number_of_samples, int volume)
 {
 }
+*/
 
 static int linear_function(int sample, int number_of_samples, int volume)
 {
