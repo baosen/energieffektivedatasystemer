@@ -18,13 +18,22 @@ void setup_sound()
     setup_dac();
 }
 
+static int triangle_function(int sample, int number_of_samples, int volume)
+{
+    (volume * sample) / 2;
+}
+
+static int sample_for_triangle = 0;
+int generate_triangle_samples(int sample, int number_of_samples, int volume)
+{
+}
+
 static int linear_function(int sample, int number_of_samples, int volume)
 {
     return (volume * sample) / number_of_samples;
 }
 
 static int sample_for_sawtooth = 0;
-
 void generate_sawtooth_samples(int frequency, int volume)
 {
     int number_of_samples_to_generate = SAMPLING_RATE / frequency;
@@ -49,7 +58,6 @@ static int square_function(int sample, int number_of_samples, int volume)
 }
 
 static int sample_for_square = 1;
-
 void generate_square_samples(int frequency, int volume)
 {
     int number_of_samples_to_generate = SAMPLING_RATE / frequency;
@@ -81,12 +89,11 @@ void generate_sinus_wave_table(int number_of_samples, int volume)
 static int current_frequency = -1, // -1 is start frequency, just to make sample function generate a table the first it is called.
            current_volume = -1,    // same here.
            sample_for_sinus = 0;
-
 void generate_sinus_samples(int frequency, int volume)
 {
     int number_of_samples_to_generate = SAMPLING_RATE / frequency;
 
-    // Check for change of frequency. If yes, generate a new sinus wave table.
+    // Check for change of frequency or volume. If yes, generate a new sinus wave table.
     if (current_frequency != frequency || current_volume != volume) { 
         generate_sinus_wave_table(number_of_samples_to_generate, volume); // because always generating sinus values is toooooo sloooooooow.
     }

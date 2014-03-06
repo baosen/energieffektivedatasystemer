@@ -1,5 +1,5 @@
-#ifndef NOTES_H_INCLUDED_lakjsdljasd
-#define NOTES_H_INCLUDED_lakjsdljasd
+#ifndef NOTES_H_INCLUDED
+#define NOTES_H_INCLUDED
 
 // Sound frequencies for different notes in the 6th octave.
 enum {

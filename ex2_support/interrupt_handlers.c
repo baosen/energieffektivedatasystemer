@@ -3,7 +3,6 @@
 #include "led.h"
 #include "sound.h"
 
-
 static int counter_2 = 0;
 static int counter_3 = 0;
 static bool lights_on = 0;

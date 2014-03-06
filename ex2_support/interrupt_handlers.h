@@ -12,7 +12,7 @@
 #include "led.h"
 
 void __attribute__ ((interrupt)) TIMER1_IRQHandler();
-void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler();  // TODO: Fix this. Does not work.
-void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler();   // TODO: Fix this. Does not work.
+void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler();
+void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler();
 
 #endif
