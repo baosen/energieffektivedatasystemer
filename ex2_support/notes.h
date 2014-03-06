@@ -1,5 +1,21 @@
 #ifndef NOTES_H_INCLUDED
 #define NOTES_H_INCLUDED
+//
+// Tones for 4th octave.
+enum {
+    NOTE_C4 = 262,
+    NOTE_CSHARP4_DFLAT4 = 277,
+    NOTE_D4 = 294,
+    NOTE_DSHARP4_EFLAT4 = 311,
+    NOTE_E4 = 330,
+    NOTE_F4 = 349,
+    NOTE_FSHARP4_GFLAT4 = 370,
+    NOTE_G4 = 392,
+    NOTE_GSHARP4_AFLAT4 = 415,
+    NOTE_A4 = 440,
+    NOTE_ASHARP4_BSHARP6 = 466,
+    NOTE_B4 = 494
+};
 
 // Sound frequencies for different notes in the 6th octave.
 enum {
@@ -17,13 +33,6 @@ enum {
     NOTE_B6   = 1975
 };
 
-// Tones for 4th octave.
-enum {
-    NOTE_C4 = 262,
-    NOTE_C4SHARP_D4FLAT = 277,
-    NOTE_D4 = 294,
-    NOTE_D4SHARP_E4FLAT = 311,
-    NOTE_E4 = 330
-};
+const int number_of_notes = 12;
 
 #endif

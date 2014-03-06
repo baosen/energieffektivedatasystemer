@@ -110,27 +110,38 @@ void __attribute__ ((interrupt)) TIMER0_IRQHandler()
 {
 }
 
-static int note = NOTE_D4;
 static int DEFAULT_VOLUME = 250;
+static int count = 0;
 
 /* TIMER1 interrupt handler */
 void __attribute__ ((interrupt)) TIMER1_IRQHandler() 
 {  
-    generate_sinus_samples(note, DEFAULT_VOLUME);
-
+    switch (count % 3) {
+    case 0:
+        generate_sinus_samples(NOTE_C4, DEFAULT_VOLUME);
+        //generate_sawtooth_samples(NOTE_C4, DEFAULT_VOLUME);
+        break;
+    case 1:
+        generate_sinus_samples(NOTE_D4, DEFAULT_VOLUME);
+        //generate_sawtooth_samples(NOTE_D4, DEFAULT_VOLUME);
+        break;
+    case 2:
+        generate_sinus_samples(NOTE_E4, DEFAULT_VOLUME);
+        //generate_sawtooth_samples(NOTE_E4, DEFAULT_VOLUME);
+        break;
+    }
 	*TIMER1_IFC = 1; // Reset timers interrupt flag.
 }
 
 /* GPIO even pin interrupt handler */
-void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler()  // TODO: Fix this. Does not work.
+void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler()
 {
-    note = NOTE_C4;
+    count++;
 	*GPIO_IFC = *GPIO_IF;
 }
 
 /* GPIO odd pin interrupt handler */
-void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()  // TODO: Fix this. Does not work.
+void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()
 {
-    note = NOTE_D4;
 	*GPIO_IFC = *GPIO_IF;
 }
