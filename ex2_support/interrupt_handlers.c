@@ -112,20 +112,21 @@ void __attribute__ ((interrupt)) TIMER0_IRQHandler()
 }
 
 static int note = NOTE_D4;
-static int number = 0;
+static int wave_choice = 2;
+static int DEFAULT_VOLUME = 250;
 
 /* TIMER1 interrupt handler */
 void __attribute__ ((interrupt)) TIMER1_IRQHandler() 
 {  
-    switch (number % 3) {
+    switch (wave_choice % 3) {
     case 0:
-        generate_square_samples(note, 1000);
+        generate_square_samples(note, DEFAULT_VOLUME);
         break;
     case 1:
-        generate_sawtooth_samples(note, 1000);
+        generate_sawtooth_samples(note, DEFAULT_VOLUME);
         break;
     case 2:
-        generate_sinus_samples(note, 1000);
+        generate_sinus_samples(note, DEFAULT_VOLUME);
         break;
     }
 
@@ -135,12 +136,12 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 /* GPIO even pin interrupt handler */
 void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler()  // TODO: Fix this. Does not work.
 {
+    wave_choice++;
 	*GPIO_IFC = *GPIO_IF;
 }
 
 /* GPIO odd pin interrupt handler */
 void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()  // TODO: Fix this. Does not work.
 {
-    umber++;
 	*GPIO_IFC = *GPIO_IF;
 }
