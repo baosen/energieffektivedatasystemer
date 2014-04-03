@@ -1,0 +1,88 @@
+/*
+ * This is a demo Linux kernel module.
+ */
+
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/init.h>
+#include <linux/fs.h>
+
+static int device_open(struct inode *, struct file *);
+static int device_release(struct inode *, struct file *);
+static ssize_t device_read(struct file *, char *, size_t, loff_t *);
+static ssize_t device_write(struct file *, const char *, size_t, loff_t *);
+
+#define SUCCESS 0
+#define DEVICE_NAME "chardev"   /* Dev name as it appears in /proc/devices   */
+#define BUF_LEN 80              /* Max length of the message from the device */
+
+/* 
+ *  Global variables are declared as static, so are global within the file. 
+ */
+
+static int Major;           /* Major number assigned to our device driver */
+static int Device_Open = 0; /* Is device open?  
+                                             * Used to prevent multiple access to device */
+static char msg[BUF_LEN];   /* The msg the device will give when asked */
+static char *msg_Ptr;
+
+static struct file_operations fops = {
+    .read = device_read,
+    .write = device_write,
+    .open = device_open,
+    .release = device_release
+};
+
+/*
+ * template_init - function to insert this module into kernel space
+ *
+ * This is the first of two exported functions to handle inserting this
+ * code into a running kernel
+ *
+ * Returns 0 if successfull, otherwise -1
+ */
+
+static int __init template_init(void)
+{
+    Major = register_chrdev(0, DEVICE_NAME, &fops);
+
+    if (Major < 0) {
+        printk(KERN_ALERT "Registering char device failed with %d\n", Major);
+        return Major;
+    }
+
+    printk(KERN_INFO "I was assigned major number %d. To talk to\n", Major);
+    printk(KERN_INFO "the driver, create a dev file with\n");
+    printk(KERN_INFO "'mknod /dev/%s c %d 0'.\n", DEVICE_NAME, Major);
+    printk(KERN_INFO "Try various minor numbers. Try to cat and echo to\n");
+    printk(KERN_INFO "the device file.\n");
+    printk(KERN_INFO "Remove the device file and module when done.\n");
+
+	return 0;
+}
+
+/*
+ * template_cleanup - function to cleanup this module from kernel space
+ *
+ * This is the second of two exported functions to handle cleanup this
+ * code from a running kernel
+ */
+
+static void __exit template_cleanup(void)
+{
+    /* 
+     *   * Unregister the device 
+     *       */
+     int ret = unregister_chrdev(Major, DEVICE_NAME);
+     if (ret < 0)
+        printk(KERN_ALERT "Error in unregister_chrdev: %d\n", ret);
+
+	 printk(KERN_INFO"Hadet\n");
+}
+
+module_init(template_init);
+module_exit(template_cleanup);
+
+MODULE_DESCRIPTION("Small module, demo only, not very useful.");
+MODULE_LICENSE("GPL");
+
