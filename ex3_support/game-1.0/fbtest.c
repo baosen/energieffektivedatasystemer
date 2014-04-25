@@ -57,22 +57,7 @@ int initialize_renderer()
         return -1;
     }
 
-
     return 0;
-}
-
-// BUG IN THE DEVICE: A black dot to the left is not drawn.
-// Update a rectangle of width and height at position x,y on screen.
-void update_screen(int x, int y, int width, int height)
-{
-    struct fb_copyarea rectangle;
-
-    rectangle.dx     = x;
-    rectangle.dy     = y;
-    rectangle.width  = width;
-    rectangle.height = height;
-
-    ioctl(framebuffer_file_descriptor, 0x4680, &rectangle);
 }
 
 void deinitialize_renderer()
@@ -119,20 +104,12 @@ int main(int argc, char* argv[])
     if (initialize_renderer() == -1) {
         return -1;
     }
-
-    fill_screen_with_color(31, 0, 0);
-    update_screen(0, 0, var_info.xres, var_info.yres);
-    fill_screen_with_color(0, 63, 0);
-    update_screen(0, 0, var_info.xres, var_info.yres);
     fill_screen_with_color(0, 0, 31);
-    update_screen(0, 0, var_info.xres, var_info.yres);
-    for (int j = 0; j < 100; j++) {
-        for (int i = 0; i < 100; i++) {
-            draw_pixel_at_position(i, j, 0, 63, 0);
-        }
-    }
-    update_screen(0, 0, 100, 100);
-
+    // for (int j = 10; j < 100; j++) {
+    //     for (int i = 10; i < 100; i++) {
+    //         draw_pixel_at_position(i, j, 31, 0, 0);
+    //     }
+    // }
     deinitialize_renderer();
 
     return EXIT_SUCCESS;
