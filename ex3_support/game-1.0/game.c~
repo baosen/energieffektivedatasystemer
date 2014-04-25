@@ -119,8 +119,6 @@ int main(int argc, char* argv[])
     update_screen(0, 0, var_info.xres, var_info.yres);
     fill_screen_with_color(0, 0, 31);
     update_screen(0, 0, var_info.xres, var_info.yres);
-   
-    // Filling the screen with a pattern
     for (int j = 0; j < 240; j++) {
         for (int i = 0; i < 320; i++) {
             draw_pixel_at_position(i, j, (j % 32), 31, (i+j % 32));
@@ -129,7 +127,7 @@ int main(int argc, char* argv[])
 	    update_screen(0, j, 320, 1);
 
     }
-	// Drawing a skrå line
+	
         for (int j = 0; j < 240; j++) {
             for (int i = 0; i < 240; i++) {
 		if (i == j){
