@@ -113,7 +113,11 @@ static int __init gamepad_init(void)
 static void __exit gamepad_exit(void)
 {
      // Unregister the device 
+     device_destroy(device_class, device_number);
+     class_destroy(device_class);
+
      cdev_del(&character_device);
+
      unregister_chrdev_region(device_number, 1);
 
 	 printk(KERN_ALERT "Goodbye, cruel world... *sad driver exits*\n");
